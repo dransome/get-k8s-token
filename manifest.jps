@@ -1,0 +1,8 @@
+type: update
+name: Get Kubernetes Token
+
+onInstall:
+  - cmd [k8sm]: kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep fulladmin | awk '{print $1}') | grep 'token:' | sed -e's/token:\| //g'
+  - return:
+      type: success
+      message: ${response.out}
